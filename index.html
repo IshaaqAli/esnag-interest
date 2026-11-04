@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="robots" content="noindex">
+<title>E-Snag Interest Form</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#001A57;--navy-deep:#011032;--orange:#F95F07;--red:#FF2E00;
+  --bg:#EDF2FC;--card:#FFFFFF;--line:#E7EBF3;--line-strong:#C9D1E3;
+  --ink:#202020;--text:#3D4254;--muted:#5F6577;--soft:#C5CEE6;--error:#C62A00;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Fira Sans',Arial,Helvetica,sans-serif;font-size:16px;line-height:1.6}
+.page{max-width:640px;margin:0 auto;padding:32px 16px 48px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.head{background:var(--navy);padding:20px 32px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.head img{display:block;height:44px;width:145px}
+.head .by{font-size:13px;line-height:17px;color:var(--soft);text-align:right}
+.head .by strong{color:#fff;font-weight:600}
+.body{padding:32px}
+h1{margin:0 0 8px;font-size:26px;line-height:32px;font-weight:700;color:var(--ink)}
+.lede{margin:0 0 24px}
+.steps{display:flex;gap:6px;margin:0 0 6px}
+.steps span{flex:1;height:4px;border-radius:2px;background:var(--line)}
+.steps span.on{background:var(--orange)}
+.steplabel{margin:0 0 24px;font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--navy)}
+fieldset.step{border:0;margin:0;padding:0;min-width:0}
+fieldset.step[hidden]{display:none}
+legend{padding:0;margin:0 0 16px;font-size:20px;line-height:26px;font-weight:700;color:var(--ink)}
+.field{margin:0 0 20px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+label.lbl,.q{display:block;margin:0 0 6px;font-weight:600;color:var(--ink);font-size:15px}
+.hint{display:block;font-weight:400;color:var(--muted);font-size:14px}
+input[type=text],input[type=email],input[type=tel],select,textarea{
+  width:100%;font:inherit;font-size:16px;color:var(--ink);background:#fff;
+  border:1px solid var(--line-strong);border-radius:4px;padding:11px 12px;
+}
+textarea{min-height:88px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--navy);outline-offset:0;border-color:var(--navy)}
+.opts{display:grid;gap:8px}
+.opts.two{grid-template-columns:1fr 1fr}
+.opt{position:relative}
+.opt input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.opt span{display:flex;align-items:center;min-height:46px;padding:10px 14px 10px 40px;border:1px solid var(--line-strong);border-radius:4px;background:#fff;color:var(--text);font-size:15px;line-height:1.35;cursor:pointer;position:relative;transition:border-color .15s,background-color .15s}
+.opt span::before{content:"";position:absolute;left:14px;top:50%;width:16px;height:16px;margin-top:-8px;border:1.5px solid var(--line-strong);border-radius:50%;background:#fff}
+.opt input[type=checkbox]+span::before{border-radius:3px}
+.opt input:checked+span{border-color:var(--navy);background:#F5F8FE;color:var(--ink)}
+.opt input:checked+span::before{border-color:var(--navy);background:var(--navy);box-shadow:inset 0 0 0 3px #fff}
+.opt input[type=checkbox]:checked+span::before{box-shadow:none;background:var(--navy) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='%23fff' stroke-width='2'/%3E%3C/svg%3E") center/12px no-repeat}
+.opt input:focus-visible+span{outline:2px solid var(--navy);outline-offset:2px}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.5;color:var(--muted)}
+.consent input{margin:3px 0 0;width:18px;height:18px;flex:none;accent-color:var(--navy)}
+.err{display:none;margin:6px 0 0;color:var(--error);font-size:14px;font-weight:500}
+.field.invalid .err{display:block}
+.field.invalid input,.field.invalid select{border-color:var(--error)}
+.field.invalid .opt span{border-color:#E9B4A6}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.nav{display:flex;gap:12px;justify-content:space-between;align-items:center;margin-top:28px;padding-top:20px;border-top:1px solid var(--line)}
+button{font:inherit;font-size:16px;font-weight:600;border-radius:4px;padding:13px 28px;cursor:pointer;border:1px solid transparent}
+.primary{background:var(--navy);color:#fff;margin-left:auto}
+.primary:hover{background:#0A2A78}
+.primary[disabled]{opacity:.6;cursor:wait}
+.ghost{background:#fff;color:var(--navy);border-color:var(--line-strong)}
+.ghost:hover{border-color:var(--navy)}
+.done{text-align:left}
+.done .badge{display:inline-block;margin:0 0 14px;padding:4px 10px;border-radius:3px;font-size:13px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;background:var(--bg);color:var(--navy)}
+.done h2{margin:0 0 10px;font-size:24px;line-height:30px;color:var(--ink)}
+.done p{margin:0 0 14px}
+.foot{background:var(--navy-deep);padding:18px 32px 20px;font-size:12px;line-height:18px;color:var(--soft)}
+.foot hr{border:0;border-top:1px solid var(--red);margin:0 0 12px}
+.foot p{margin:0 0 6px}
+.foot a{color:#fff}
+.sendfail{display:none;margin:16px 0 0;padding:12px 14px;border-radius:4px;background:#FFF1EC;color:var(--error);font-size:14px}
+@media (max-width:620px){
+  .page{padding:16px 12px 32px}
+  .head,.body,.foot{padding-left:20px;padding-right:20px}
+  .row,.opts.two{grid-template-columns:1fr}
+  h1{font-size:23px;line-height:29px}
+  .nav button{flex:1;padding-left:12px;padding-right:12px}
+}
+</style>
+</head>
+<body>
+<main class="page">
+<div class="card">
+  <header class="head">
+    <img src="assets/logo-esnag.png" width="145" height="44" alt="e-Snag, Set it Right">
+    <div class="by">Presented by<br><strong>E-Snag's Ireland partner</strong></div>
+  </header>
+
+  <div class="body">
+    <form id="f" novalidate>
+      <div id="intro">
+        <h1>Tell us about your scheme</h1>
+        <p class="lede">Three short steps, about two minutes. We use your answers to check E-Snag is a good fit before we call.</p>
+        <div class="steps" aria-hidden="true"><span class="on"></span><span></span><span></span></div>
+        <p class="steplabel" id="steplabel">Step 1 of 3 &middot; About you</p>
+      </div>
+
+      <!-- Spam trap: real people never see or fill this -->
+      <div class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
+
+      <fieldset class="step" data-label="About you">
+        <legend>About you</legend>
+        <div class="row">
+          <div class="field"><label class="lbl" for="name">Full name</label><input id="name" name="name" type="text" autocomplete="name" required><p class="err">Please enter your name.</p></div>
+          <div class="field"><label class="lbl" for="company">Company</label><input id="company" name="company" type="text" autocomplete="organization" required><p class="err">Please enter your company.</p></div>
+        </div>
+        <div class="row">
+          <div class="field"><label class="lbl" for="email">Work email</label><input id="email" name="email" type="email" autocomplete="email" required><p class="err">Please enter a valid email.</p></div>
+          <div class="field"><label class="lbl" for="phone">Phone</label><input id="phone" name="phone" type="tel" autocomplete="tel" required><p class="err">Please enter a phone number.</p></div>
+        </div>
+        <div class="field">
+          <label class="lbl" for="role">Your role</label>
+          <select id="role" name="role" required>
+            <option value="">Choose one</option>
+            <option>Director / owner</option>
+            <option>Contracts or construction manager</option>
+            <option>Site manager</option>
+            <option>Quantity surveyor</option>
+            <option>Customer care / aftercare</option>
+            <option>Other</option>
+          </select>
+          <p class="err">Please choose your role.</p>
+        </div>
+        <div class="field" data-group="buyer">
+          <span class="q">Who chooses software like this at your company?</span>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="buyer" value="I make the decision" data-score="3" required><span>I make the decision</span></label>
+            <label class="opt"><input type="radio" name="buyer" value="I recommend, someone else signs off" data-score="2"><span>I recommend, someone else signs off</span></label>
+            <label class="opt"><input type="radio" name="buyer" value="I'm not involved in the decision" data-score="0"><span>I'm not involved in the decision</span></label>
+          </div>
+          <p class="err">Please choose one.</p>
+        </div>
+      </fieldset>
+
+      <fieldset class="step" data-label="Your projects" hidden>
+        <legend>Your projects</legend>
+        <div class="field" data-group="orgtype">
+          <span class="q">What best describes your company?</span>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="orgtype" value="Housebuilder / developer" data-score="3" required><span>Housebuilder / developer</span></label>
+            <label class="opt"><input type="radio" name="orgtype" value="Main contractor" data-score="3"><span>Main contractor building homes</span></label>
+            <label class="opt"><input type="radio" name="orgtype" value="Approved housing body / local authority" data-score="2"><span>Approved housing body or local authority</span></label>
+            <label class="opt"><input type="radio" name="orgtype" value="Snagging / inspection consultant" data-score="1"><span>Snagging or inspection consultant</span></label>
+            <label class="opt"><input type="radio" name="orgtype" value="Homebuyer / homeowner" data-score="0" data-out="homeowner"><span>I'm a homebuyer or homeowner</span></label>
+          </div>
+          <p class="err">Please choose one.</p>
+        </div>
+        <div class="field">
+          <label class="lbl" for="location">Where are your schemes? <span class="hint">County, ROI or NI</span></label>
+          <input id="location" name="location" type="text" required placeholder="e.g. Kildare, ROI">
+          <p class="err">Please tell us where you build.</p>
+        </div>
+        <div class="field" data-group="homes">
+          <span class="q">Homes you'll hand over in the next 12 months</span>
+          <div class="opts two">
+            <label class="opt"><input type="radio" name="homes" value="Fewer than 10" data-score="0" required><span>Fewer than 10</span></label>
+            <label class="opt"><input type="radio" name="homes" value="10 to 49" data-score="2"><span>10 to 49</span></label>
+            <label class="opt"><input type="radio" name="homes" value="50 to 199" data-score="3"><span>50 to 199</span></label>
+            <label class="opt"><input type="radio" name="homes" value="200 or more" data-score="3"><span>200 or more</span></label>
+          </div>
+          <p class="err">Please choose one.</p>
+        </div>
+        <div class="field" data-group="handover">
+          <span class="q">When is your next handover?</span>
+          <div class="opts two">
+            <label class="opt"><input type="radio" name="handover" value="Within 3 months" data-score="3" required><span>Within 3 months</span></label>
+            <label class="opt"><input type="radio" name="handover" value="3 to 6 months" data-score="3"><span>3 to 6 months</span></label>
+            <label class="opt"><input type="radio" name="handover" value="6 to 12 months" data-score="2"><span>6 to 12 months</span></label>
+            <label class="opt"><input type="radio" name="handover" value="Over 12 months / no live scheme" data-score="0"><span>Over 12 months, or no live scheme</span></label>
+          </div>
+          <p class="err">Please choose one.</p>
+        </div>
+      </fieldset>
+
+      <fieldset class="step" data-label="How you snag today" hidden>
+        <legend>How you snag today</legend>
+        <div class="field" data-group="method">
+          <span class="q">How do you record snags now?</span>
+          <div class="opts two">
+            <label class="opt"><input type="radio" name="method" value="Paper / clipboard" data-score="2" required><span>Paper or clipboard</span></label>
+            <label class="opt"><input type="radio" name="method" value="Spreadsheets / email" data-score="2"><span>Spreadsheets or email</span></label>
+            <label class="opt"><input type="radio" name="method" value="Other snagging software" data-score="1"><span>Other snagging software</span></label>
+            <label class="opt"><input type="radio" name="method" value="An outside inspector does it" data-score="1"><span>An outside inspector does it</span></label>
+          </div>
+          <p class="err">Please choose one.</p>
+        </div>
+        <div class="field" data-group="pain">
+          <span class="q">What slows your handovers down? <span class="hint">Pick any that apply</span></span>
+          <div class="opts">
+            <label class="opt"><input type="checkbox" name="pain" value="Snags get lost between site and office"><span>Snags get lost between site and office</span></label>
+            <label class="opt"><input type="checkbox" name="pain" value="Chasing subcontractors to fix items"><span>Chasing subcontractors to fix items</span></label>
+            <label class="opt"><input type="checkbox" name="pain" value="Disputes with buyers or trades"><span>Disputes with buyers or trades</span></label>
+            <label class="opt"><input type="checkbox" name="pain" value="Too much time on reports and paperwork"><span>Too much time on reports and paperwork</span></label>
+          </div>
+          <p class="err">Pick at least one.</p>
+        </div>
+        <div class="field" data-group="timeline">
+          <span class="q">When would you want a new system in place?</span>
+          <div class="opts two">
+            <label class="opt"><input type="radio" name="timeline" value="As soon as possible" data-score="3" required><span>As soon as possible</span></label>
+            <label class="opt"><input type="radio" name="timeline" value="This quarter" data-score="3"><span>This quarter</span></label>
+            <label class="opt"><input type="radio" name="timeline" value="Within 6 months" data-score="2"><span>Within 6 months</span></label>
+            <label class="opt"><input type="radio" name="timeline" value="Just researching" data-score="0"><span>Just researching for now</span></label>
+          </div>
+          <p class="err">Please choose one.</p>
+        </div>
+        <div class="field">
+          <label class="lbl" for="notes">Anything else we should know? <span class="hint">Optional. Best time to call, scheme name, questions.</span></label>
+          <textarea id="notes" name="notes"></textarea>
+        </div>
+        <div class="field">
+          <label class="consent"><input type="checkbox" name="consent" id="consent" required><span>I'm happy for E-Snag's Ireland partner to contact me about E-Snag. We won't share your details or add you to a mailing list.</span></label>
+          <p class="err">Please tick to let us contact you.</p>
+        </div>
+      </fieldset>
+
+      <div class="nav" id="nav">
+        <button type="button" class="ghost" id="back" hidden>Back</button>
+        <button type="submit" class="primary" id="next">Next</button>
+      </div>
+      <p class="sendfail" id="sendfail" role="alert">Something went wrong sending your answers. Please try again, or email <a href="mailto:ryan.alex@snag.ae">ryan.alex@snag.ae</a>.</p>
+    </form>
+
+    <div class="done" id="done" hidden tabindex="-1">
+      <span class="badge" id="done-badge"></span>
+      <h2 id="done-title"></h2>
+      <div id="done-body"></div>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <hr>
+    <p>E-Snag's Ireland partner &middot; [postal address]</p>
+    <p>Your answers go only to us and are used only to reply to you. Questions? <a href="mailto:ryan.alex@snag.ae">ryan.alex@snag.ae</a></p>
+  </footer>
+</div>
+</main>
+
+<script>
+/*
+  WHERE ANSWERS GO
+  Paste a form endpoint below (e.g. a free Formspree form: https://formspree.io/f/xxxxxxx)
+  and answers are delivered to your inbox automatically.
+  Left empty, the form opens the visitor's email app with their answers filled in,
+  addressed to TO_EMAIL, and they press send.
+*/
+var FORM_ENDPOINT = "https://formspree.io/f/xzeeoalk";
+var TO_EMAIL = "ryan.alex@snag.ae";
+
+var form = document.getElementById("f");
+var steps = Array.prototype.slice.call(form.querySelectorAll("fieldset.step"));
+var bars = document.querySelectorAll(".steps span");
+var back = document.getElementById("back");
+var next = document.getElementById("next");
+var current = 0;
+
+function show(i) {
+  steps.forEach(function (s, n) { s.hidden = n !== i; });
+  Array.prototype.forEach.call(bars, function (b, n) { b.classList.toggle("on", n <= i); });
+  document.getElementById("steplabel").textContent = "Step " + (i + 1) + " of " + steps.length + " · " + steps[i].dataset.label;
+  back.hidden = i === 0;
+  next.textContent = i === steps.length - 1 ? "Send my answers" : "Next";
+  current = i;
+}
+
+function fieldOk(field) {
+  var group = field.dataset.group;
+  if (group) {
+    if (group === "pain") return !!field.querySelector("input:checked");
+    return !!field.querySelector("input[name=" + group + "]:checked");
+  }
+  var el = field.querySelector("input,select,textarea");
+  if (!el || !el.required) return true;
+  if (el.type === "checkbox") return el.checked;
+  if (el.type === "email") return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim());
+  return el.value.trim() !== "";
+}
+
+function validate(step) {
+  var first = null;
+  step.querySelectorAll(".field").forEach(function (field) {
+    var ok = fieldOk(field);
+    field.classList.toggle("invalid", !ok);
+    if (!ok && !first) first = field;
+  });
+  if (first) {
+    var target = first.querySelector("input,select,textarea");
+    first.scrollIntoView({ behavior: "smooth", block: "center" });
+    if (target) target.focus({ preventScroll: true });
+  }
+  return !first;
+}
+
+form.addEventListener("input", function (e) {
+  var field = e.target.closest(".field");
+  if (field && field.classList.contains("invalid") && fieldOk(field)) field.classList.remove("invalid");
+});
+form.addEventListener("change", function (e) {
+  var field = e.target.closest(".field");
+  if (field && field.classList.contains("invalid") && fieldOk(field)) field.classList.remove("invalid");
+});
+
+back.addEventListener("click", function () { show(current - 1); window.scrollTo({ top: 0, behavior: "smooth" }); });
+
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  if (!validate(steps[current])) return;
+  if (current < steps.length - 1) {
+    show(current + 1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    return;
+  }
+  submit();
+});
+
+function val(name) {
+  var el = form.querySelector("[name=" + name + "]:checked") || form.elements[name];
+  return el && el.value ? el.value.trim() : "";
+}
+
+/* Fit score: 0 to 17. Homebuyers are always "not a fit". */
+function assess() {
+  var score = 0;
+  form.querySelectorAll("input[type=radio][data-score]:checked").forEach(function (r) { score += +r.dataset.score; });
+  var homeowner = !!form.querySelector("input[data-out=homeowner]:checked");
+  var tier = homeowner || score < 6 ? "Not a fit now" : score >= 11 ? "Strong fit" : "Possible fit";
+  return { score: score, tier: tier, homeowner: homeowner };
+}
+
+function collect(fit) {
+  var pains = Array.prototype.map.call(form.querySelectorAll("input[name=pain]:checked"), function (c) { return c.value; });
+  return {
+    "Fit": fit.tier + " (" + fit.score + "/17)",
+    "Full name": val("name"),
+    "Company": val("company"),
+    "Role": val("role"),
+    "Email": val("email"),
+    "Phone": val("phone"),
+    "Decision maker": val("buyer"),
+    "Company type": val("orgtype"),
+    "Scheme location": val("location"),
+    "Homes in next 12 months": val("homes"),
+    "Next handover": val("handover"),
+    "Snags recorded with": val("method"),
+    "Handover problems": pains.join("; "),
+    "Timeline": val("timeline"),
+    "Notes": val("notes") || "-"
+  };
+}
+
+function submit() {
+  if (val("_gotcha")) { finish(assess(), false); return; }
+  var fit = assess();
+  var data = collect(fit);
+  var subject = "[" + fit.tier + "] E-Snag interest: " + data["Company"];
+
+  if (!FORM_ENDPOINT) {
+    var body = Object.keys(data).map(function (k) { return k + ": " + data[k]; }).join("\n");
+    window.location.href = "mailto:" + TO_EMAIL + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+    finish(fit, true);
+    return;
+  }
+
+  next.disabled = true;
+  next.textContent = "Sending…";
+  document.getElementById("sendfail").style.display = "none";
+  var payload = Object.assign({ _subject: subject, _replyto: data["Email"] }, data);
+  fetch(FORM_ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Accept": "application/json" },
+    body: JSON.stringify(payload)
+  }).then(function (r) {
+    if (!r.ok) throw new Error(r.status);
+    finish(fit, false);
+  }).catch(function () {
+    next.disabled = false;
+    next.textContent = "Send my answers";
+    document.getElementById("sendfail").style.display = "block";
+  });
+}
+
+function finish(fit, viaEmail) {
+  var first = val("name").split(" ")[0] || "there";
+  var badge, title, html;
+  if (fit.homeowner) {
+    badge = "Thanks";
+    title = "E-Snag is built for builders";
+    html = "<p>Thanks, " + esc(first) + ". E-Snag is used by housebuilders and contractors to manage snags across whole schemes, so it isn't the right tool for checking a single home.</p><p>If you're buying a new home, an independent snagging inspector is the best next step.</p>";
+  } else if (fit.tier === "Strong fit") {
+    badge = "Looks like a good fit";
+    title = "Thanks, " + esc(first) + ". We'll be in touch shortly.";
+    html = "<p>From your answers, E-Snag should suit your schemes well. We'll call you within one working day to arrange a short demo using your own handover process.</p>";
+  } else if (fit.tier === "Possible fit") {
+    badge = "Thanks";
+    title = "Thanks, " + esc(first) + ". We'll follow up by email.";
+    html = "<p>We'll send you a short overview of how E-Snag works on schemes like yours, then arrange a call if it makes sense.</p>";
+  } else {
+    badge = "Thanks";
+    title = "Thanks, " + esc(first) + ".";
+    html = "<p>It sounds like the timing may not be right yet. We'll send you some information to keep on file, and you can reply to it whenever you have a live scheme coming up.</p>";
+  }
+  if (viaEmail) html = "<p><strong>One last step:</strong> your email app has opened with your answers. Press send to finish.</p>" + html;
+  document.getElementById("done-badge").textContent = badge;
+  document.getElementById("done-title").innerHTML = title;
+  document.getElementById("done-body").innerHTML = html;
+  form.hidden = true;
+  var done = document.getElementById("done");
+  done.hidden = false;
+  done.focus();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function esc(s) {
+  return s.replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; });
+}
+
+show(0);
+</script>
+</body>
+</html>
